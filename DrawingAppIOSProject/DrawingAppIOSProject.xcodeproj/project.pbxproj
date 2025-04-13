@@ -89,7 +89,7 @@
 		1D4F896D2D8398620029F8A9 /* DrawingAppIOSProject */ = {
 			isa = PBXGroup;
 			children = (
-				1DA52D592DAB1A6D00A371AC /* New Group */,
+				1DA52D592DAB1A6D00A371AC /* Classes */,
 				1D15D3D32D9602260062A4EF /* Database */,
 				1D4F89872D8399EC0029F8A9 /* ViewControllers */,
 				1D4F896E2D8398620029F8A9 /* AppDelegate.swift */,
@@ -125,13 +125,13 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		1DA52D592DAB1A6D00A371AC /* New Group */ = {
+		1DA52D592DAB1A6D00A371AC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				1DA52D5A2DAB1A9900A371AC /* ImageData.swift */,
 				1DA52D5C2DAB1C1300A371AC /* ImageCell.swift */,
 			);
-			path = "New Group";
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
