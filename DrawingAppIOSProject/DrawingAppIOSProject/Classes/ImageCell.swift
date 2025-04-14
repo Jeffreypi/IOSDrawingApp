@@ -16,6 +16,11 @@ class ImageCell: UITableViewCell {
     @IBOutlet var timeStampLabel : UILabel!
     @IBOutlet var titleLabel : UILabel!
     
+    var onEditTapped: (() -> Void)?
+    @IBAction func editButtonTapped(_ sender: UIButton){
+        onEditTapped?()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

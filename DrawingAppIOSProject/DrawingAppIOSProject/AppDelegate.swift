@@ -34,6 +34,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func getDrawingByID(_ id: Int) -> PKDrawing? {
+        
+        var db: OpaquePointer?
+
+        if sqlite3_open(databasePath, &db) == SQLITE_OK {
+            let query = "SELECT DrawingData FROM DrawingsTable WHERE ID = ?;"
+            var statement: OpaquePointer?
+
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_int(statement, 1, Int32(id))
+
+                if sqlite3_step(statement) == SQLITE_ROW,
+                   let blob = sqlite3_column_blob(statement, 0) {
+                    let size = sqlite3_column_bytes(statement, 0)
+                    let data = Data(bytes: blob, count: Int(size))
+                    sqlite3_finalize(statement)
+                    sqlite3_close(db)
+                    return try? PKDrawing(data: data)
+                }
+            }
+
+            sqlite3_finalize(statement)
+            sqlite3_close(db)
+        }
+
+        return nil
+    }
+
+    
+    func deleteDrawingFromDatabase(id: Int) {
+        var db: OpaquePointer?
+        if sqlite3_open(databasePath, &db) == SQLITE_OK {
+            let deleteStatementString = "DELETE FROM DrawingsTable WHERE id = ?;"
+            var deleteStatement: OpaquePointer?
+
+            if sqlite3_prepare_v2(db, deleteStatementString, -1, &deleteStatement, nil) == SQLITE_OK {
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    print("✅ Successfully deleted drawing with ID \(id)")
+                } else {
+                    print("Could not delete drawing.")
+                }
+            } else {
+                print("DELETE statement could not be prepared.")
+            }
+
+            sqlite3_finalize(deleteStatement)
+            sqlite3_close(db)
+        }
+    }
+
+    
     func getImagesFromDatabase(){
         image.removeAll()
         
@@ -61,11 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 sqlite3_finalize(statement)
             } else {
-                print("⚠️ Failed to prepare read query.")
+                print("Failed to prepare read query.")
             }
             sqlite3_close(db)
         } else {
-            print("⚠️ Failed to open database for reading.")
+            print("Failed to open database for reading.")
         }
     }
     

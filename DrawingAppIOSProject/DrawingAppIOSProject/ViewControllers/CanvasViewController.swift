@@ -10,6 +10,7 @@ import PencilKit
 
 class CanvasViewController: UIViewController, PKCanvasViewDelegate {
 
+    
     @IBAction func unwindToCanvasVC(sender : UIStoryboardSegue){
         
     }
@@ -17,6 +18,7 @@ class CanvasViewController: UIViewController, PKCanvasViewDelegate {
     @IBOutlet var canvasView : PKCanvasView!
     @IBOutlet var saveButton : UIBarButtonItem!
     var toolPicker = PKToolPicker()
+    var existingDrawing: PKDrawing?
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +59,13 @@ class CanvasViewController: UIViewController, PKCanvasViewDelegate {
         
         canvasView.drawingPolicy = .anyInput
         canvasView.backgroundColor = .white
+        
+        if let drawing = existingDrawing{
+            print("recieved drawing with bounds: \(drawing.bounds)")
+            canvasView.drawing = drawing
+        }else{
+            print("no drawing received")
+        }
         
     }
     
