@@ -21,6 +21,12 @@ class ImageCell: UITableViewCell {
         onEditTapped?()
     }
     
+    var onViewTapped: (() -> Void)?
+    
+    @IBAction func viewButtonTapped(_ sender: UIButton){
+        onViewTapped?()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

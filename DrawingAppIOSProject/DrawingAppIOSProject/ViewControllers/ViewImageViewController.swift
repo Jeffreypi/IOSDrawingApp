@@ -8,12 +8,16 @@
 import UIKit
 
 class ViewImageViewController: UIViewController {
-
+    var savedDrawing: UIImage?
+    
+    @IBOutlet var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imageView.image = savedDrawing
         // Do any additional setup after loading the view.
     }
+   
     
 
     /*

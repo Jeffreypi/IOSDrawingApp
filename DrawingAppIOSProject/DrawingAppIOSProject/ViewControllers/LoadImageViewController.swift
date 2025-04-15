@@ -83,6 +83,26 @@ class LoadImageViewController: UIViewController, UITableViewDataSource, UITableV
             print("no valid id for imagedata")
             return tableCell
         }
+        tableCell.onViewTapped = { [weak self] in
+            guard let self = self else { return }
+
+            if let drawingData = imageData.DrawingData {
+                do {
+                    let drawing = try PKDrawing(data: drawingData)
+                    let image = self.drawingToImage(drawing)
+
+                    // Instantiate view-only controller
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    if let viewOnlyVC = storyboard.instantiateViewController(withIdentifier: "ViewImageViewController") as? ViewImageViewController {
+                        viewOnlyVC.savedDrawing = image
+                        self.present(viewOnlyVC, animated: true)
+                    }
+                } catch {
+                    print("Failed to decode drawing for viewing")
+                }
+            }
+        }
+
         
         tableCell.onEditTapped = { [weak self] in
             guard let self = self else {return}
